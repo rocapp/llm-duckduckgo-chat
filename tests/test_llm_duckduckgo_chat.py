@@ -1,3 +1,4 @@
+import unittest
 import pytest
 from unittest.mock import patch, MagicMock
 from llm_duckduckgo_chat import DuckChatModel, DuckChat
@@ -107,3 +108,7 @@ def test_fetch_response_failure():
             DuckChat.fetch_response(
                 "https://example.com", "test_vqd", "hash", "gpt-4o-mini", []
             )
+
+
+if __name__=='__main__':
+    unitest.main()

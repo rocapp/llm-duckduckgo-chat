@@ -18,6 +18,11 @@ dependencies = [
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
+[dependency-groups]
+dev = [
+    "ipython>=8.18.1",
+]
+
 [project.urls]
 Homepage = "https://github.com/sukhbinder/llm-duckduckgo-chat"
 Changelog = "https://github.com/sukhbinder/llm-duckduckgo-chat/releases"

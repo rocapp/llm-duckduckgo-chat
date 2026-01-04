@@ -1,3 +1,4 @@
+from typing import Dict
 import requests
 import json
 from threading import Thread
@@ -7,6 +8,28 @@ from typing import Optional
 from pydantic import Field
 import string
 import random
+from dataclasses import dataclass, field, asdict
+
+
+@dataclass
+class DefaultHeaders:
+    extra_headers: Dict = field(default_factory=dict)
+    headers: Dict = field(init=False)
+
+    def __post_init__(self, extra_headers):
+        self.headers = self.load_default_headers()
+        self.headers.update(extra_headers)
+
+    @staticmethod
+    def load_default_headers():
+        with open("./headers.json", "r") as f_:
+            h = json.load(f_)
+        return h
+
+    def todict(self):
+        return asdict(self)
+
+
 
 
 MODELS = {
@@ -94,7 +117,7 @@ class DuckChatModel(llm.Model):
         vqd = chat_response.headers.get("x-vqd-4", "")
         prompt.options.vqd = vqd
 
-        # vqdhash = chat_response.headers.get("x-vqd-hash-1", "")
+        vqdhash = chat_response.headers.get("x-vqd-hash-1", "")
         prompt.options.vqdhash = vqdhash
 
         if stream:
